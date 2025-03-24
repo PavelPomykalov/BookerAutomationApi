@@ -11,21 +11,21 @@ public class APIClient {
         this.baseUrl = determineBaseUrl();
     }
 
-    // Определение базового URL на основе файла конфигурации
-    private String determineBaseUrl(){
-        String environment = System.getProperty("env","test");
-        String configFileName = "application-" + environment + ".properties";
+        private String determineBaseUrl() {
+            String environment = System.getProperty("env", "test");
+            String configFileName = "application-" + environment + ".properties";
 
-        Properties properties = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream(configFileName)) {
-            if (input == null) {
-                throw new IllegalStateException("Configuration file not found: " + configFileName);
+            Properties properties = new Properties();
+            try (InputStream input = getClass().getClassLoader().getResourceAsStream(configFileName)) {
+                if (input == null) {
+                    throw new IllegalStateException("Configuration file not found: " + configFileName);
+                }
+                properties.load(input);
+            } catch (IOException e) {
+                throw new IllegalStateException("Unable to load configuration file: " + configFileName, e);
             }
-            properties.load(input);
+            return properties.getProperty("baseUrl");
         }
-      catch (IOException e) {
-          throw new IllegalStateException("Unable to load configuration file: " + configFileName, e);
-        }
-        return properties.getProperty("baseUrl");
     }
-}
+
+
