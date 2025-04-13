@@ -7,6 +7,8 @@ public class BookingDates {
     private String checkin;
     private String checkout;
 
+    public BookingDates() {}
+
     // Конструктор
     @JsonCreator
 

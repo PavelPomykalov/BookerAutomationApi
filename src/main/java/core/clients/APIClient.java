@@ -1,5 +1,6 @@
 package core.clients;
 
+import core.models.CreateBooking;
 import core.settings.ApiEndpoints;
 import io.restassured.RestAssured;
 import io.restassured.filter.Filter;
@@ -11,6 +12,7 @@ import io.restassured.specification.RequestSpecification;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 import java.util.Properties;
 
 public class APIClient {
@@ -87,12 +89,23 @@ public class APIClient {
 
     // Get запрос на эндпоинт /booking
     public Response getBooking() {
-        return getRequestSpec() // это то что мы поместили в getRequestSpec
+        return getRequestSpec()// это то что мы поместили в getRequestSpec
                 .when() // команда объявляет то что мы будем делать
                 .get(ApiEndpoints.BOOKING.getPath()) //отправляем get запрос //  Используем Enum для эндроинта /ping
                 .then() //Затем
                 .statusCode(200) // Ожидаемый статус код
                 .extract() // Распаковка того, что пришло в response
+                .response();
+    }
+
+    public Response getBookingWithFilters(Map<String, String> filters) {
+        return getRequestSpec()
+                .queryParams(filters) // добавление query параметров
+                .when()
+                .get(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .statusCode(200)
+                .extract()
                 .response();
     }
 
@@ -113,8 +126,43 @@ public class APIClient {
                 .delete(ApiEndpoints.BOOKING.getPath() + "/" + bookingid)  //  Используем Enum для эндроинта /booking
                 .then() //Затем
                 .log().all()
-                .statusCode(201)// Ожидаемый статус код
                 .extract() // Распаковка того, что пришло в response
+                .response();
+    }
+
+    //Post запрос на создание бронирования
+    public Response createBooking (String newBooking) {
+        return getRequestSpec()
+                .body(newBooking) // передаем тело запроса
+                .log().all()
+                .when()
+                .post(ApiEndpoints.BOOKING.getPath())
+                .then()
+                .extract()
+                .response();
+    }
+
+    //Put запрос на изменение бронирования
+    public Response updateBooking (int bookingid, String newBooking) {
+        return getRequestSpec()
+                .body(newBooking) // передаем тело запроса
+                .log().all()
+                .when()
+                .put(ApiEndpoints.BOOKING.getPath() + "/" + bookingid)
+                .then()
+                .extract()
+                .response();
+    }
+
+    //Patch запрос частичное обновление
+    public Response patchUpdateBooking (int bookingid, String newBooking) {
+        return getRequestSpec()
+                .body(newBooking)   // передаем тело запроса
+                .log().all()
+                .when()
+                .patch(ApiEndpoints.BOOKING.getPath() + "/" + bookingid)
+                .then()
+                .extract()
                 .response();
     }
 

@@ -6,9 +6,10 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class DeleteAndCheckId {
+public class DeleteAndCheckIdTest {
     private APIClient apiClient;
     private ObjectMapper objectMapper;
     private int id;
@@ -29,6 +30,7 @@ public class DeleteAndCheckId {
     }
 
     private void getBookingId() throws Exception {
+        step("Отправка get запроса");
         Response response = apiClient.getBooking();
         // Проверяем статус код = 200
         assertThat(response.getStatusCode()).isEqualTo(200);
@@ -45,7 +47,7 @@ public class DeleteAndCheckId {
         System.out.println(" id удален: " + id);
     }
 
-    public void testGetBookingId() throws Exception {
+    private void testGetBookingId() throws Exception {
         // Выполняем запрос к эндпоинту /booking через APIClient
         Response response = apiClient.getBookingId(id);
 

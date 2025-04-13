@@ -31,6 +31,9 @@ public class BookingInfo {
         this.additionalneeds = additionalneeds;
     }
 
+    public BookingInfo() {
+    }
+
     public String getFirstname() {
         return firstname;
     }
