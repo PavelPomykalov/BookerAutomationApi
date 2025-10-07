@@ -50,7 +50,6 @@ public class GetBookingTest {
     }
 
     public void createBooking() throws JsonProcessingException {
-        objectMapper = new ObjectMapper();
         String requestBody = objectMapper.writeValueAsString(newBooking); // создаем переменную requestBody и превращаем в строку объект newBooking
         Response response = apiClient.createBooking(requestBody); // в переменную response записали ответ на запрос
 
@@ -77,7 +76,7 @@ public class GetBookingTest {
         assertThat(bookings).isNotEmpty(); // Проверяем что тело содержит объекты bookingid
 
         for (Booking booking : bookings) {
-            assertThat(booking.getBookingid()).isGreaterThan(0); // bookingId должен быть больше 0
+            assertThat(booking.getBookingid()).isGreaterThan(0);// bookingId должен быть больше 0
         }
         System.out.println("Цикл отработал");
     }

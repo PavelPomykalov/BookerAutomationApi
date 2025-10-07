@@ -1,10 +1,8 @@
 package tests;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import core.clients.APIClient;
-import core.models.Booking;
 import core.models.BookingDates;
 import core.models.BookingInfo;
 import core.models.CreateBooking;
@@ -52,7 +50,7 @@ public class GetBookingIdFilterTest {
 
     public void createBooking() throws JsonProcessingException {
         step("Создаем массив где будем хранить созданные бронирования");
-         createdBooking = new ArrayList<>();
+        createdBooking = new ArrayList<>();
 
         for (BookingInfo booking : bookings) {
             String requestBody = objectMapper.writeValueAsString(booking);
@@ -106,7 +104,7 @@ public class GetBookingIdFilterTest {
             String bookingLastName = bookingResponseLastName.jsonPath().getString("lastname");
             assertThat(bookingLastName).isEqualTo("TESTOV");
         }
-            System.out.println("Второй тест пройден");
+        System.out.println("Второй тест пройден");
 
 //        System.out.println("Третий тест");
 //        step("Запрос с фильтрацией по bookingdates");
@@ -149,8 +147,6 @@ public class GetBookingIdFilterTest {
         }
     }
 }
-
-
 
 
 

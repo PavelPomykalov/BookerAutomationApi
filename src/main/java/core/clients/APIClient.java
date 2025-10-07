@@ -148,7 +148,7 @@ public class APIClient {
                 .body(newBooking) // передаем тело запроса
                 .log().all()
                 .when()
-                .put(ApiEndpoints.BOOKING.getPath() + "/" + bookingid)
+                .put(ApiEndpoints.BOOKING + "/" + bookingid)
                 .then()
                 .extract()
                 .response();
@@ -159,7 +159,6 @@ public class APIClient {
         return getRequestSpec()
                 .body(newBooking)   // передаем тело запроса
                 .log().all()
-                .when()
                 .patch(ApiEndpoints.BOOKING.getPath() + "/" + bookingid)
                 .then()
                 .extract()
